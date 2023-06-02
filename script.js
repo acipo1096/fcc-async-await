@@ -1,3 +1,11 @@
+let stocks = 
+    {
+        Fruits: ["strawberry","grapes","banana","apples"],
+        liquid: ["water","ice"],
+        holder: ["cone","cup","stick"],
+        toppings: ["chocolate","peanuts"]
+    };
+
 // We use the try keyword to run our code
 // while we use the catch to catch our errors
 
@@ -83,7 +91,7 @@ function time(ms){
 
   return new Promise( (resolve, reject)=>{
 
-    if(is_shop_open == true){
+    if(is_shop_open){
       setTimeout(resolve,ms);
     }
 
