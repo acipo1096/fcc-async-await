@@ -9,6 +9,9 @@ let stocks =
 
 let is_shop_open = true;
 
+// .then works when a promise is resolved
+// .catch works when a promise is rejected
+
 let order = (time,work) =>{
 
     return new Promise ((resolve, reject)=>{
@@ -66,7 +69,16 @@ order(2000,()=>console.log(`${stocks.Fruits[0]} was selected`))
 // Step 8
 .then(()=>{
   return order(2000, ()=>console.log("Serve Ice Cream"))
-});
+})
+
+.catch(()=>{
+  console.log("Customer left")
+})
+
+// The .finally handler works regardless of whether our promise was resolved or rejected
+.finally(()=>{
+  console.log("End of day")
+})
 
 // The .then handler returns a Promise when our original promise is resolved
 // It's similar to giving instructions to someone. 
@@ -74,4 +86,3 @@ order(2000,()=>console.log(`${stocks.Fruits[0]} was selected`))
 // and so on.
 // The first task is our original promise.
 // The rest of the tasks return our promise once one small bit of work is completed
-
