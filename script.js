@@ -1,88 +1,115 @@
-let stocks = 
-    {
-        Fruits: ["strawberry","grapes","banana","apples"],
-        liquid: ["water","ice"],
-        holder: ["cone","cup","stick"],
-        toppings: ["chocolate","peanuts"]
-    };
+// We use the try keyword to run our code
+// while we use the catch to catch our errors
 
+// JS Promises format
+
+/*
+function kitchen(){
+
+  return new Promise ((resolve, reject)=>{
+    if(true){
+      resolve("promise is fulfilled")
+    }
+
+    else{
+      reject("error caught here")
+    }
+  })
+}
+
+kitchen()     // run the code
+   .then()    // next step
+   .then()    // next step
+   .catch()   // error caught here
+   .finally() // end of the promise (optional)
+*/
+
+// Async, Await in JS -> try, catch
+
+/*
+async function kitchen(){
+
+  try {
+    // let's create a fake problem
+    await abc;
+  }
+
+  catch(error){
+    console.log("abc does not exist", error)
+  }
+
+  finally{
+    console.log("Code runs anyway")
+  }
+}
+
+kitchen() // run the code
+*/
+
+
+// The await keyword makes JS wait untill a promise settles and returns its result
+
+function toppings_choice(){
+  return new Promise((resolve,reject)=>{
+    setTimeout(()=>{
+      resolve(console.log("which topping do you want?"))
+    },3000)
+  })
+}
+
+async function kitchen(){
+  console.log("A");
+  console.log("B")
+  console.log("C")
+
+  await toppings_choice()
+
+  console.log("D")
+  console.log("E")
+}
+
+kitchen();
+
+console.log("doing the dishes");
+console.log("cleaning the tables");
+console.log("taking orders")
+
+// We are literally going outside our kitchen to ask the customer what he or she wants
+// In the meantime, other things still get done
 
 let is_shop_open = true;
 
-// .then works when a promise is resolved
-// .catch works when a promise is rejected
+function time(ms){
 
-let order = (time,work) =>{
+  return new Promise( (resolve, reject)=>{
 
-    return new Promise ((resolve, reject)=>{
-        if(is_shop_open){
-            setTimeout(()=>{
-                // work is getting done here
-                resolve(work());
+    if(is_shop_open == true){
+      setTimeout(resolve,ms);
+    }
 
-                // Setting time here for 1 work
-            }, time)
-            
-        }
-        else{
-            reject(console.log("Our shop is closed"))
-        }
-    })
+    else{
+      reject(console.log("Shop is closed"))
+    }
 
+  })
 }
 
-order(2000,()=>console.log(`${stocks.Fruits[0]} was selected`))
+async function kitchen(){
+  try{
 
-// step 1
-order(2000,()=>console.log(`${stocks.Fruits[0]} was selected`))
+    // time taken to perform this 1 task
+    await time(2000)
+    console.log(`${stocks.Fruits[0]} was selected`)
+  }
 
-// step 2
-.then(()=>{
-  return order(0000,()=>console.log('production has started'))
-})
+  catch(error){
+    console.log("Customer left",error)
+  }
 
-// step 3
-.then(()=>{
-  return order(2000, ()=>console.log("Fruit has been chopped"))
-})
+  finally{
+    console.log("Day ended, shop closed")
+  }
+}
 
-// step 4
-.then(()=>{
-  return order(1000, ()=>console.log(`${stocks.liquid[0]} and ${stocks.liquid[1]} added`))
-})
-
-// step 5
-.then(()=>{
-  return order(1000, ()=>console.log("start the machine"))
-})
-
-// step 6
-.then(()=>{
-  return order(2000, ()=>console.log(`ice cream placed on ${stocks.holder[1]}`))
-})
-
-// step 7
-.then(()=>{
-  return order(3000, ()=>console.log(`${stocks.toppings[0]} as toppings`))
-})
-
-// Step 8
-.then(()=>{
-  return order(2000, ()=>console.log("Serve Ice Cream"))
-})
-
-.catch(()=>{
-  console.log("Customer left")
-})
-
-// The .finally handler works regardless of whether our promise was resolved or rejected
-.finally(()=>{
-  console.log("End of day")
-})
-
-// The .then handler returns a Promise when our original promise is resolved
-// It's similar to giving instructions to someone. 
-// You tell someone to " First do this, then do that, then this other thing, then.., then.., then..."
-// and so on.
-// The first task is our original promise.
-// The rest of the tasks return our promise once one small bit of work is completed
+// Trigger
+kitchen();
